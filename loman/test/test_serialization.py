@@ -64,3 +64,17 @@ def test_dict_round_trip():
     }
     d2 = round_trip(d)
     assert d2 == d
+
+
+class Foo(object):
+    def __init__(self, value):
+        self.value = value
+
+    def __eq__(self, other):
+        return isinstance(other, Foo) and self.value == other.value
+
+
+def test_unknown_type_round_trip():
+    foo = Foo('x')
+    foo2 = round_trip(foo)
+    assert foo == foo2
